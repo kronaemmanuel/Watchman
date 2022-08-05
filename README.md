@@ -20,7 +20,11 @@ The project is setup with [Docker](https://docs.docker.com/get-docker/). Make
 sure you have `docker compose` available in your terminal. Run
 
 ```commandline
-docker-compose up
+docker compose build
+```
+
+```commandline
+docker compose up
 ```
 
 The app should start running at `0.0.0.0:8000`
