@@ -32,6 +32,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'django_crontab',
     'watchman',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,6 +41,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+CRONJOBS = [
+    ('* * * * *', 'watchman.cron.change_timezones')
+]
+
+CRONTAB_COMMAND_SUFFIX = '2>&1'
+
+CRONTAB_COMMAND_PREFIX = (
+    f"POSTGRES_DB={os.environ.get('POSTGRES_DB')}" + ' '
+    f"POSTGRES_USER={os.environ.get('POSTGRES_USER')}" + ' '
+    f"POSTGRES_PASSWORD={os.environ.get('POSTGRES_PASSWORD')}"
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -108,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Karachi'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 

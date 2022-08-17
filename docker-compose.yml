@@ -22,3 +22,12 @@ services:
       - POSTGRES_PASSWORD=postgres
     depends_on:
       - db
+  cron:
+    build: .
+    command: bash -c "python manage.py crontab add && cron -f" 
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
