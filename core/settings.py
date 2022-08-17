@@ -32,6 +32,8 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'django_crontab',
+    'watchman',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +41,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+CRONJOBS = [
+    ('* * * * *', 'watchman.cron.change_timezones')
+]
+
+CRONTAB_COMMAND_SUFFIX = '2>&1'
+
+CRONTAB_COMMAND_PREFIX = (
+    f"POSTGRES_DB={os.environ.get('POSTGRES_DB')}" + ' '
+    f"POSTGRES_USER={os.environ.get('POSTGRES_USER')}" + ' '
+    f"POSTGRES_PASSWORD={os.environ.get('POSTGRES_PASSWORD')}"
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -111,7 +125,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
